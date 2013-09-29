@@ -1,0 +1,2 @@
+select productId,MAX(cnt) from (select productId, COUNT(productId) AS cnt from movies GROUP BY productId);
+

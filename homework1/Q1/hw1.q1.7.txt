@@ -1,0 +1,2 @@
+select productId, cnt, ascore from (select productId, COUNT(productId) AS cnt, AVG(score) AS ascore from movies GROUP BY productId) where cnt > 100 ORDER BY ascore DESC LIMIT 5;
+

@@ -1,0 +1,43 @@
+sqlite3 movies.db  < hw1.q1.4.txt
+253059
+sqlite3 movies.db  < hw1.q1.5.txt
+B002QZ1RS6|957
+sqlite3 movies.db  < hw1.q1.6.txt
+A16CZRQL23NOIW|10793
+sqlite3 movies.db  < hw1.q1.7.txt
+B007MDB6RO|553|4.96564195298373
+0578046725|224|4.96428571428571
+B00006B1HI|124|4.95161290322581
+B00006B1HK|124|4.95161290322581
+B00006LSE8|124|4.95161290322581
+
+Popular movies:INSANITY DVD Workout
+
+Top movies: 1.GCB: The Complete First Season (2012)
+	    2.Food Production Systems for a Backyard or Small Farm
+	    3.9/11 - The Filmmakers' Commemorative Edition (2002)
+	    4.9/11 - The Filmmakers' Commemorative Edition [VHS] (2002)
+	    5.9/11 (2002)
+
+The wall-clock times: 
+	    1. Before creating indices:11.82user 1.00system 0:16.46elapsed
+	    2. After creating indices:2.40user 0.04system 0:02.46elapsed
+
+Output of explain query:
+	    1. Before creating indices: 
+		0|0|0|SCAN TABLE movies (~1000000 rows)
+		0|0|0|USE TEMP B-TREE FOR GROUP BY
+		0|0|0|USE TEMP B-TREE FOR ORDER BY
+	    2. After creating indices:
+		0|0|0|SCAN TABLE movies USING COVERING INDEX pindex (~1000000 rows)
+		0|0|0|USE TEMP B-TREE FOR ORDER BY
+
+Justification of indices:
+	    Before creating indices, the select command will perform a full-table scan. 
+	    As for the aggregates operation, it will use a temperary B-tree for the "ORDER BY" 
+	    and "GROUP BY" operation.
+	    After creating indices, the select command will use the index created on 
+	    attributes(productId, score) to scan the proper tuples and also use a temperary
+	    B-tree for the "ORDER BY" operation.  
+	    Because the impact of indices makes the scan avoid unneccessary operations, this makes
+	    the scan more efficient.

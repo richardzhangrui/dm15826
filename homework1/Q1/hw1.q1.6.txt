@@ -1,0 +1,1 @@
+select userId, MAX(cnt) from (select userId, COUNT(userId) AS cnt from movies GROUP BY userId);
